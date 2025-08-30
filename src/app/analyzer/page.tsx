@@ -1,3 +1,4 @@
+
 import { AiAnalyzerClient } from "./ai-analyzer-client";
 
 export default function AnalyzerPage() {
