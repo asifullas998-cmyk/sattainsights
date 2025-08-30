@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { format } from 'date-fns';
 import { analyzeGuessingForum, AnalyzeGuessingForumOutput } from '@/ai/flows/analyze-guessing-forum';
 
 import { Button } from '@/components/ui/button';
@@ -11,12 +12,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Zap, Users, Target, Flame, Bot } from 'lucide-react';
+import { Loader2, Zap, Users, Target, Flame, Bot, CalendarIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const formSchema = z.object({
   gameName: z.string().min(1, 'Please select a game.'),
   forumUrl: z.string().url('Please enter a valid URL.'),
+  date: z.date({
+    required_error: 'A date is required.',
+  }),
 });
 
 function AnalysisResultCard({ icon, title, children }: { icon: React.ReactNode, title: string, children: React.ReactNode }) {
@@ -43,6 +50,7 @@ export function SattaGuesserClient() {
     defaultValues: {
       gameName: 'KALYAN',
       forumUrl: '',
+      date: new Date(),
     },
   });
 
@@ -50,7 +58,10 @@ export function SattaGuesserClient() {
     setIsLoading(true);
     setAnalysisResult(null);
     try {
-      const result = await analyzeGuessingForum(values);
+      const result = await analyzeGuessingForum({
+        ...values,
+        date: format(values.date, 'yyyy-MM-dd'),
+      });
       setAnalysisResult(result);
     } catch (error: any) {
       console.error('Analysis failed:', error);
@@ -110,6 +121,47 @@ export function SattaGuesserClient() {
                           {...field}
                         />
                       </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                 <FormField
+                  control={form.control}
+                  name="date"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>Date</FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "w-full pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "PPP")
+                              ) : (
+                                <span>Pick a date</span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            disabled={(date) =>
+                              date > new Date() || date < new Date("1900-01-01")
+                            }
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
                       <FormMessage />
                     </FormItem>
                   )}
