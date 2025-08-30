@@ -228,7 +228,7 @@ export function AiAnalyzerClient() {
                         <CardHeader className="flex-row items-center gap-4 space-y-0">
                             <div className="p-2 rounded-lg bg-primary/10 text-primary"><Search className="w-6 h-6" /></div>
                             <CardTitle>Missing Numbers</CardTitle>
-                        </Header>
+                        </CardHeader>
                         <CardContent>
                             <HighlightNumbers text={analysisResult.missingNumbers} />
                         </CardContent>
@@ -236,8 +236,8 @@ export function AiAnalyzerClient() {
                     <Card>
                         <CardHeader className="flex-row items-center gap-4 space-y-0">
                             <div className="p-2 rounded-lg bg-primary/10 text-primary"><Target className="w-6 h-6" /></div>
-                            <CardTitle>Hot & Cold Numbers</CardTitle>
-                        </Header>
+                            <CardTitle>Hot &amp; Cold Numbers</CardTitle>
+                        </CardHeader>
                         <CardContent>
                            <HighlightNumbers text={analysisResult.hotAndColdNumbers} />
                         </CardContent>
@@ -246,7 +246,7 @@ export function AiAnalyzerClient() {
                         <CardHeader className="flex-row items-center gap-4 space-y-0">
                             <div className="p-2 rounded-lg bg-primary/10 text-primary"><Zap className="w-6 h-6" /></div>
                             <CardTitle>Jodi Analysis</CardTitle>
-                        </Header>
+                        </CardHeader>
                         <CardContent>
                              <HighlightNumbers text={analysisResult.jodiAnalysis} />
                         </CardContent>
