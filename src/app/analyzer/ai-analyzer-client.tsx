@@ -234,7 +234,7 @@ Sunday: 224-81-470`,
                         <CardHeader className="flex-row items-center gap-4 space-y-0">
                             <div className="p-2 rounded-lg bg-primary/10 text-primary"><Search className="w-6 h-6" /></div>
                             <CardTitle>Missing Numbers</CardTitle>
-                        </CardHeader>
+                        </Header>
                         <CardContent>
                             <HighlightNumbers text={analysisResult.missingNumbers} />
                         </CardContent>
