@@ -20,23 +20,23 @@ type GameSchedule = {
 };
 
 const liveResults: GameResult[] = [
-  { name: "KALYAN", openPatti: "135", open: "9", jodi: "93", close: "3", closePatti: "157", chartLink: "/charts" },
-  { name: "MAIN BAZAR", openPatti: "248", open: "4", jodi: "41", close: "1", closePatti: "560", chartLink: "/charts" },
-  { name: "MILAN NIGHT", openPatti: "670", open: "3", jodi: "33", close: "3", closePatti: "120", chartLink: "/charts" },
-  { name: "RAJDHANI NIGHT", openPatti: "389", open: "0", jodi: "05", close: "5", closePatti: "230", chartLink: "/charts" },
+  { name: "KALYAN", openPatti: "248", open: "4", jodi: "42", close: "2", closePatti: "156", chartLink: "/charts" },
+  { name: "MAIN BAZAR", openPatti: "380", open: "1", jodi: "17", close: "7", closePatti: "458", chartLink: "/charts" },
+  { name: "MILAN NIGHT", openPatti: "120", open: "3", jodi: "35", close: "5", closePatti: "500", chartLink: "/charts" },
+  { name: "RAJDHANI NIGHT", openPatti: "230", open: "5", jodi: "59", close: "9", closePatti: "180", chartLink: "/charts" },
 ];
 
 const gameSchedule: GameSchedule[] = [
-  { name: "MILAN MORNING", time: "10:15 AM - 11:15 AM", live: false },
-  { name: "KALYAN MORNING", time: "11:00 AM - 12:00 PM", live: false },
-  { name: "SRIDEVI", time: "11:35 AM - 12:35 PM", live: false },
-  { name: "MADHURI", time: "11:45 AM - 12:45 PM", live: false },
-  { name: "KALYAN", time: "04:30 PM - 06:30 PM", live: true },
-  { name: "SRIDEVI NIGHT", time: "07:00 PM - 08:00 PM", live: false },
-  { name: "MADHURI NIGHT", time: "08:15 PM - 09:15 PM", live: false },
-  { name: "MILAN NIGHT", time: "09:00 PM - 11:00 PM", live: true },
-  { name: "RAJDHANI NIGHT", time: "09:25 PM - 11:35 PM", live: true },
-  { name: "MAIN BAZAR", time: "09:40 PM - 11:55 PM", live: true },
+    { name: "MILAN MORNING", time: "10:00 AM - 11:00 AM", live: false },
+    { name: "KALYAN MORNING", time: "11:00 AM - 12:00 PM", live: true },
+    { name: "SRIDEVI", time: "11:30 AM - 12:30 PM", live: false },
+    { name: "MADHURI", time: "12:00 PM - 01:00 PM", live: false },
+    { name: "KALYAN", time: "04:10 PM - 06:10 PM", live: false },
+    { name: "SRIDEVI NIGHT", time: "07:00 PM - 08:00 PM", live: false },
+    { name: "MADHURI NIGHT", time: "08:30 PM - 09:30 PM", live: false },
+    { name: "MILAN NIGHT", time: "09:00 PM - 11:00 PM", live: true },
+    { name: "RAJDHANI NIGHT", time: "09:30 PM - 11:45 PM", live: true },
+    { name: "MAIN BAZAR", time: "10:00 PM - 11:59 PM", live: true },
 ];
 
 export default function Home() {
@@ -49,41 +49,41 @@ export default function Home() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Kalyan Morning</CardTitle>
-            <span className="text-sm text-muted-foreground">125-8</span>
+            <span className="text-sm text-muted-foreground">480-2</span>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">125-88-125</div>
+            <div className="text-2xl font-bold">480-21-579</div>
             <p className="text-xs text-muted-foreground">Result at 12:00 PM</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Sridevi Day</CardTitle>
-             <span className="text-sm text-muted-foreground">469-9</span>
+             <span className="text-sm text-muted-foreground">137-1</span>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">469-91-236</div>
-             <p className="text-xs text-muted-foreground">Result at 01:35 PM</p>
+            <div className="text-2xl font-bold">137-14-680</div>
+             <p className="text-xs text-muted-foreground">Result at 01:30 PM</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Time Bazar</CardTitle>
-             <span className="text-sm text-muted-foreground">128-1</span>
+             <span className="text-sm text-muted-foreground">590-4</span>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">128-17-458</div>
-            <p className="text-xs text-muted-foreground">Result at 02:00 PM</p>
+            <div className="text-2xl font-bold">590-43-120</div>
+            <p className="text-xs text-muted-foreground">Result at 02:30 PM</p>
           </CardContent>
         </Card>
         <Card className="bg-primary text-primary-foreground">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Kalyan Live</CardTitle>
+            <CardTitle className="text-sm font-medium">Kalyan Morning Live</CardTitle>
             <CircleDot className="text-accent animate-pulse"/>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">458-7</div>
-            <p className="text-xs text-muted-foreground">Close at 06:30 PM</p>
+            <div className="text-2xl font-bold">128-1</div>
+            <p className="text-xs text-muted-foreground">Close at 12:00 PM</p>
           </CardContent>
         </Card>
       </div>
