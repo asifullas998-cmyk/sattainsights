@@ -25,10 +25,10 @@ const formSchema = z.object({
 // A component to find and style numbers in a string
 const HighlightNumbers = ({ text }: { text: string }) => {
     if (!text) return null;
-  
+
     // Regex to find numbers, number pairs with '-', and number groups
     const parts = text.split(/(\b\d{1,3}-\d{1,2}-\d{1,3}\b|\b\d{2,3}\b|\b\d{1,2}\b)/g);
-  
+
     return (
       <p className="text-sm text-muted-foreground leading-relaxed">
         {parts.map((part, index) =>
