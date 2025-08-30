@@ -12,11 +12,12 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Zap, BarChart, Search, Target, Puzzle, BrainCircuit } from 'lucide-react';
+import { Loader2, Zap, BarChart, Search, Target, Puzzle, BrainCircuit, Users } from 'lucide-react';
 
 const formSchema = z.object({
   gameName: z.string().min(1, 'Please select a game.'),
   historicalData: z.string().min(20, 'Please provide at least 20 characters of historical data.'),
+  urls: z.string().optional(),
 });
 
 export function AiAnalyzerClient() {
@@ -35,6 +36,7 @@ Thursday: 237-29-450
 Friday: 115-78-350
 Saturday: 580-30-127
 Sunday: 224-81-470`,
+      urls: '',
     },
   });
 
@@ -42,14 +44,19 @@ Sunday: 224-81-470`,
     setIsLoading(true);
     setAnalysisResult(null);
     try {
-      const result = await analyzeSattaPatterns(values);
+      const urlArray = values.urls ? values.urls.split('\n').filter(url => url.trim() !== '') : [];
+      const result = await analyzeSattaPatterns({
+        gameName: values.gameName,
+        historicalData: values.historicalData,
+        urls: urlArray,
+      });
       setAnalysisResult(result);
     } catch (error) {
       console.error('Analysis failed:', error);
       toast({
         variant: 'destructive',
         title: 'Analysis Failed',
-        description: 'An error occurred while analyzing the data. Please try again.',
+        description: 'An error occurred while analyzing the data. Please check the console for details.',
       });
     } finally {
       setIsLoading(false);
@@ -62,7 +69,7 @@ Sunday: 224-81-470`,
         <Card>
           <CardHeader>
             <CardTitle>Analyze Data</CardTitle>
-            <CardDescription>Select a game and provide data to start.</CardDescription>
+            <CardDescription>Provide historical data and URLs to start.</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -80,7 +87,7 @@ Sunday: 224-81-470`,
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="KALYAN">Kalyan</SelectItem>
+                           <SelectItem value="KALYAN">Kalyan</SelectItem>
                           <SelectItem value="KALYAN MORNING">Kalyan Morning</SelectItem>
                           <SelectItem value="KALYAN NIGHT">Kalyan Night</SelectItem>
                           <SelectItem value="MAIN BAZAR">Main Bazar</SelectItem>
@@ -95,6 +102,12 @@ Sunday: 224-81-470`,
                           <SelectItem value="MADHUR NIGHT">Madhur Night</SelectItem>
                           <SelectItem value="SUPREME DAY">Supreme Day</SelectItem>
                           <SelectItem value="SUPREME NIGHT">Supreme Night</SelectItem>
+                          <SelectItem value="MAIN BOMBAY">Main Bombay</SelectItem>
+                          <SelectItem value="GUESSING FORUM">Guessing Forum</SelectItem>
+                          <SelectItem value="PADMAVATI">Padmavati</SelectItem>
+                          <SelectItem value="KALYAN STARLINE">Kalyan Starline</SelectItem>
+                          <SelectItem value="GOA NIGHT">Goa Night</SelectItem>
+                          <SelectItem value="CHENNAI MORNING">Chennai Morning</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -109,8 +122,25 @@ Sunday: 224-81-470`,
                       <FormLabel>Historical Data</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Paste historical Satta results here, e.g., 'Monday: 123-6-789'"
-                          className="min-h-[200px] font-mono text-sm"
+                          placeholder="Paste historical Satta results here..."
+                          className="min-h-[150px] font-mono text-sm"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="urls"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Website URLs (Optional)</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Paste one or more website URLs here, each on a new line, to analyze community guesses."
+                          className="min-h-[100px] font-mono text-sm"
                           {...field}
                         />
                       </FormControl>
@@ -142,7 +172,7 @@ Sunday: 224-81-470`,
             {isLoading && (
               <div className="flex flex-col items-center justify-center h-96 gap-4">
                 <BrainCircuit className="w-16 h-16 text-primary animate-pulse" />
-                <p className="text-muted-foreground">Analyzing patterns... Please wait.</p>
+                <p className="text-muted-foreground">Analyzing patterns... This may take a moment.</p>
               </div>
             )}
             {analysisResult ? (
@@ -150,10 +180,19 @@ Sunday: 224-81-470`,
                 <Card>
                   <CardHeader className="flex-row items-center gap-4 space-y-0">
                     <div className="p-2 rounded-lg bg-primary/10 text-primary"><Puzzle className="w-6 h-6" /></div>
-                    <CardTitle>Summary</CardTitle>
+                    <CardTitle>Overall Summary</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">{analysisResult.summary}</p>
+                  </CardContent>
+                </Card>
+                 <Card>
+                  <CardHeader className="flex-row items-center gap-4 space-y-0">
+                    <div className="p-2 rounded-lg bg-primary/10 text-primary"><Users className="w-6 h-6" /></div>
+                    <CardTitle>Community Forum Analysis</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">{analysisResult.forumAnalysis}</p>
                   </CardContent>
                 </Card>
                 <div className="grid gap-4 md:grid-cols-2">
