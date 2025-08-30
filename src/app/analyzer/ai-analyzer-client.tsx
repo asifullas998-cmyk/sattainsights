@@ -11,7 +11,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Zap, BarChart, Search, Target, Puzzle, BrainCircuit, Users } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -19,8 +18,6 @@ import React from 'react';
 
 const formSchema = z.object({
   gameName: z.string().min(1, 'Please select a game.'),
-  historicalData: z.string().min(20, 'Please provide at least 20 characters of historical data.'),
-  urls: z.string().optional(),
 });
 
 // A component to find and style numbers in a string
@@ -54,8 +51,6 @@ export function AiAnalyzerClient() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       gameName: '',
-      historicalData: '',
-      urls: '',
     },
   });
 
@@ -63,11 +58,8 @@ export function AiAnalyzerClient() {
     setIsLoading(true);
     setAnalysisResult(null);
     try {
-      const urlArray = values.urls ? values.urls.split('\n').filter(url => url.trim() !== '') : [];
       const result = await analyzeSattaPatterns({
         gameName: values.gameName,
-        historicalData: values.historicalData,
-        urls: urlArray,
       });
       setAnalysisResult(result);
     } catch (error) {
@@ -87,8 +79,8 @@ export function AiAnalyzerClient() {
       <div className="lg:col-span-2">
         <Card>
           <CardHeader>
-            <CardTitle>Analyze Data</CardTitle>
-            <CardDescription>Provide historical data and URLs to start.</CardDescription>
+            <CardTitle>Analyze Game</CardTitle>
+            <CardDescription>Select a game to start the analysis.</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -133,40 +125,6 @@ export function AiAnalyzerClient() {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="historicalData"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Historical Data</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder="Paste historical Satta results here..."
-                          className="min-h-[150px] font-mono text-sm"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="urls"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Website URLs (Optional)</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder="Paste one or more website URLs here, each on a new line, to analyze community guesses."
-                          className="min-h-[100px] font-mono text-sm"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
                 <Button type="submit" disabled={isLoading} className="w-full">
                   {isLoading ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -191,7 +149,7 @@ export function AiAnalyzerClient() {
             {isLoading && (
               <div className="flex flex-col items-center justify-center h-96 gap-4">
                 <BrainCircuit className="w-16 h-16 text-primary animate-pulse" />
-                <p className="text-muted-foreground">Analyzing patterns... This may take a moment.</p>
+                <p className="text-muted-foreground">Fetching data and analyzing patterns... This may take a moment.</p>
               </div>
             )}
             {analysisResult ? (

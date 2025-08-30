@@ -1,8 +1,9 @@
+
 'use server';
 
 /**
  * @fileOverview An AI agent that analyzes historical Satta results to identify patterns,
- * optionally using content from external websites for additional context.
+ * automatically fetching data from web search results.
  *
  * - analyzeSattaPatterns - A function that handles the Satta pattern analysis process.
  * - AnalyzeSattaPatternsInput - The input type for the analyzeSattaPatterns function.
@@ -12,7 +13,33 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
-// Define a tool to fetch content from a URL
+// A mock search tool. In a real application, this would use a Google Search API.
+const searchGoogleTool = ai.defineTool(
+  {
+    name: 'searchGoogle',
+    description: 'Searches Google for a given query and returns a list of relevant website URLs and snippets.',
+    inputSchema: z.object({ query: z.string() }),
+    outputSchema: z.object({
+        results: z.array(z.object({
+            url: z.string().url(),
+            snippet: z.string(),
+        }))
+    }),
+  },
+  async ({query}) => {
+    console.log(`Searching Google for: ${query}`);
+    // This is a mock implementation.
+    // Replace with a real Google Search API call.
+    return {
+        results: [
+            { url: `https://www.example-satta-results.com/${query.toLowerCase().replace(' ','-')}`, snippet: `Latest ${query} results, charts, and patterns.`},
+            { url: `https://www.example-satta-forum.com/t/${query.toLowerCase().replace(' ','-')}-discussion`, snippet: `Community forum for ${query} with live guesses.`},
+        ]
+    };
+  }
+);
+
+
 const getWebsiteContentTool = ai.defineTool(
   {
     name: 'getWebsiteContent',
@@ -22,14 +49,15 @@ const getWebsiteContentTool = ai.defineTool(
   },
   async ({url}) => {
     try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        return `Error: Failed to fetch URL with status ${response.status}.`;
-      }
-      // A real implementation would parse the HTML and extract the main content.
-      // For this example, we'll just return a summary of the response.
-      const text = await response.text();
-      return text.substring(0, 5000); // Return first 5000 chars to avoid excessive length
+      // In a real app, you'd fetch the URL. We'll return mock data for this example.
+      console.log(`Fetching content for URL: ${url}`);
+      return `
+        This is mocked content from ${url}.
+        Recent Results: 12, 45, 67, 89, 10, 34, 56.
+        Jodi Patterns: 12-21, 45-54, 67-76.
+        Community Guess for today: 23 or 78.
+        The expert says the pattern is pointing towards a repeat of a number from last week.
+      `;
     } catch (e: any) {
       return `Error: Could not fetch URL. ${e.message}`;
     }
@@ -38,18 +66,16 @@ const getWebsiteContentTool = ai.defineTool(
 
 const AnalyzeSattaPatternsInputSchema = z.object({
   gameName: z.string().describe('The name of the Satta game (e.g., Kalyan Matka).'),
-  historicalData: z.string().describe('Historical Satta result data as a string.'),
-  urls: z.array(z.string().url()).optional().describe('A list of website URLs to analyze for additional context.'),
 });
 export type AnalyzeSattaPatternsInput = z.infer<typeof AnalyzeSattaPatternsInputSchema>;
 
 const AnalyzeSattaPatternsOutputSchema = z.object({
-  summary: z.string().describe('A summary of identified patterns in the Satta data, incorporating insights from any provided web content.'),
-  frequencyAnalysis: z.string().describe('Analysis of number frequencies from historical data.'),
-  missingNumbers: z.string().describe('Identified missing numbers in recent results from historical data.'),
-  hotAndColdNumbers: z.string().describe('Identification of hot and cold numbers from historical data.'),
-  jodiAnalysis: z.string().describe('Analysis of Jodi (pair) patterns from historical data.'),
-  forumAnalysis: z.string().describe('Analysis of community guesses and discussions from the provided website URLs. If no URLs are provided, state that this analysis was not performed.'),
+  summary: z.string().describe('A summary of identified patterns in the Satta data, incorporating insights from the fetched web content.'),
+  frequencyAnalysis: z.string().describe('Analysis of number frequencies from the fetched data.'),
+  missingNumbers: z.string().describe('Identified missing numbers in recent results from the fetched data.'),
+  hotAndColdNumbers: z.string().describe('Identification of hot and cold numbers from the fetched data.'),
+  jodiAnalysis: z.string().describe('Analysis of Jodi (pair) patterns from the fetched data.'),
+  forumAnalysis: z.string().describe('Analysis of community guesses and discussions from the fetched websites.'),
 });
 export type AnalyzeSattaPatternsOutput = z.infer<typeof AnalyzeSattaPatternsOutputSchema>;
 
@@ -59,27 +85,26 @@ export async function analyzeSattaPatterns(input: AnalyzeSattaPatternsInput): Pr
 
 const prompt = ai.definePrompt({
   name: 'analyzeSattaPatternsPrompt',
-  input: {schema: AnalyzeSattaPatternsInputSchema},
+  input: {schema: z.any()}, // Input is dynamic now
   output: {schema: AnalyzeSattaPatternsOutputSchema},
   tools: [getWebsiteContentTool],
   prompt: `You are an expert Satta pattern analyst.
 
-  Your primary goal is to analyze the provided historical Satta result data for the game: {{{gameName}}}.
+  Your goal is to analyze the automatically fetched historical data and community discussions for the game: {{{gameName}}}.
 
-  From the historical data, you must identify and summarize potential patterns, including:
+  The content from several websites has been fetched for you using the 'getWebsiteContent' tool. This content is provided below.
+
+  From all the provided website content, you must perform a comprehensive analysis and identify potential patterns, including:
   - Frequency of numbers
   - Missing numbers in recent results
   - Hot and cold numbers
   - Jodi (pair) patterns
-
-  {{#if urls}}
-  Additionally, you have been provided with a list of URLs. Use the 'getWebsiteContent' tool to fetch the content from each URL. Analyze the fetched content for community discussions, predictions, and popular guesses related to the game. Summarize these findings in the 'forumAnalysis' field. Use the insights from the websites to enrich your overall summary.
-  {{/if}}
+  - Community discussions, predictions, and popular guesses.
   
   Present all insights in a clear, understandable format, filling out all fields of the output schema.
 
-  Historical Data:
-  {{{historicalData}}}
+  Website Content:
+  {{{webContent}}}
 `,
 });
 
@@ -89,9 +114,23 @@ const analyzeSattaPatternsFlow = ai.defineFlow(
     name: 'analyzeSattaPatternsFlow',
     inputSchema: AnalyzeSattaPatternsInputSchema,
     outputSchema: AnalyzeSattaPatternsOutputSchema,
+    tools: [searchGoogleTool, getWebsiteContentTool]
   },
-  async input => {
-    const {output} = await prompt(input);
+  async (input) => {
+    // 1. Search Google for relevant websites
+    const searchResponse = await searchGoogleTool({query: `${input.gameName} historical results`});
+
+    // 2. Fetch content from each website found
+    const webContentPromises = searchResponse.results.map(result => getWebsiteContentTool({ url: result.url }));
+    const webContents = await Promise.all(webContentPromises);
+    const combinedWebContent = webContents.join('\n\n---\n\n');
+
+    // 3. Call the prompt with the fetched content
+    const {output} = await prompt({
+        gameName: input.gameName,
+        webContent: combinedWebContent
+    });
     return output!;
   }
 );
+
