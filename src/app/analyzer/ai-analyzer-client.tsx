@@ -28,7 +28,13 @@ export function AiAnalyzerClient() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       gameName: 'KALYAN',
-      historicalData: `Monday: 589-27-160\nTuesday: 340-71-290\nWednesday: 680-45-140\nThursday: 237-29-450\nFriday: 115-78-350\nSaturday: 580-30-127\nSunday: 224-81-470`,
+      historicalData: `Monday: 589-27-160
+Tuesday: 340-71-290
+Wednesday: 680-45-140
+Thursday: 237-29-450
+Friday: 115-78-350
+Saturday: 580-30-127
+Sunday: 224-81-470`,
     },
   });
 
@@ -75,9 +81,20 @@ export function AiAnalyzerClient() {
                         </FormControl>
                         <SelectContent>
                           <SelectItem value="KALYAN">Kalyan</SelectItem>
+                          <SelectItem value="KALYAN MORNING">Kalyan Morning</SelectItem>
+                          <SelectItem value="KALYAN NIGHT">Kalyan Night</SelectItem>
                           <SelectItem value="MAIN BAZAR">Main Bazar</SelectItem>
+                          <SelectItem value="MILAN DAY">Milan Day</SelectItem>
+                          <SelectItem value="MILAN MORNING">Milan Morning</SelectItem>
                           <SelectItem value="MILAN NIGHT">Milan Night</SelectItem>
                           <SelectItem value="RAJDHANI NIGHT">Rajdhani Night</SelectItem>
+                          <SelectItem value="TIME BAZAR">Time Bazar</SelectItem>
+                          <SelectItem value="SRIDEVI">Sridevi</SelectItem>
+                          <SelectItem value="SRIDEVI NIGHT">Sridevi Night</SelectItem>
+                          <SelectItem value="MADHUR DAY">Madhur Day</SelectItem>
+                          <SelectItem value="MADHUR NIGHT">Madhur Night</SelectItem>
+                          <SelectItem value="SUPREME DAY">Supreme Day</SelectItem>
+                          <SelectItem value="SUPREME NIGHT">Supreme Night</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />

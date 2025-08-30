@@ -100,9 +100,20 @@ export function SattaGuesserClient() {
                         </FormControl>
                         <SelectContent>
                           <SelectItem value="KALYAN">Kalyan</SelectItem>
+                          <SelectItem value="KALYAN MORNING">Kalyan Morning</SelectItem>
+                          <SelectItem value="KALYAN NIGHT">Kalyan Night</SelectItem>
                           <SelectItem value="MAIN BAZAR">Main Bazar</SelectItem>
+                          <SelectItem value="MILAN DAY">Milan Day</SelectItem>
+                          <SelectItem value="MILAN MORNING">Milan Morning</SelectItem>
                           <SelectItem value="MILAN NIGHT">Milan Night</SelectItem>
                           <SelectItem value="RAJDHANI NIGHT">Rajdhani Night</SelectItem>
+                          <SelectItem value="TIME BAZAR">Time Bazar</SelectItem>
+                          <SelectItem value="SRIDEVI">Sridevi</SelectItem>
+                          <SelectItem value="SRIDEVI NIGHT">Sridevi Night</SelectItem>
+                          <SelectItem value="MADHUR DAY">Madhur Day</SelectItem>
+                          <SelectItem value="MADHUR NIGHT">Madhur Night</SelectItem>
+                          <SelectItem value="SUPREME DAY">Supreme Day</SelectItem>
+                          <SelectItem value="SUPREME NIGHT">Supreme Night</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
