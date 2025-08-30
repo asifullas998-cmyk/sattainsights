@@ -20,10 +20,10 @@ type GameSchedule = {
 };
 
 const liveResults: GameResult[] = [
-  { name: "KALYAN", openPatti: "248", open: "4", jodi: "42", close: "2", closePatti: "156", chartLink: "/charts" },
-  { name: "MAIN BAZAR", openPatti: "380", open: "1", jodi: "17", close: "7", closePatti: "458", chartLink: "/charts" },
-  { name: "MILAN NIGHT", openPatti: "120", open: "3", jodi: "35", close: "5", closePatti: "500", chartLink: "/charts" },
-  { name: "RAJDHANI NIGHT", openPatti: "230", open: "5", jodi: "59", close: "9", closePatti: "180", chartLink: "/charts" },
+  { name: "KALYAN", openPatti: "345", open: "2", jodi: "23", close: "3", closePatti: "490", chartLink: "/charts" },
+  { name: "MAIN BAZAR", openPatti: "115", open: "7", jodi: "71", close: "1", closePatti: "380", chartLink: "/charts" },
+  { name: "MILAN NIGHT", openPatti: "580", open: "3", jodi: "35", close: "5", closePatti: "140", chartLink: "/charts" },
+  { name: "RAJDHANI NIGHT", openPatti: "248", open: "4", jodi: "41", close: "1", closePatti: "560", chartLink: "/charts" },
 ];
 
 const gameSchedule: GameSchedule[] = [
@@ -31,7 +31,7 @@ const gameSchedule: GameSchedule[] = [
     { name: "KALYAN MORNING", time: "11:00 AM - 12:00 PM", live: true },
     { name: "SRIDEVI", time: "11:30 AM - 12:30 PM", live: false },
     { name: "MADHURI", time: "12:00 PM - 01:00 PM", live: false },
-    { name: "KALYAN", time: "04:10 PM - 06:10 PM", live: false },
+    { name: "KALYAN", time: "04:10 PM - 06:10 PM", live: true },
     { name: "SRIDEVI NIGHT", time: "07:00 PM - 08:00 PM", live: false },
     { name: "MADHURI NIGHT", time: "08:30 PM - 09:30 PM", live: false },
     { name: "MILAN NIGHT", time: "09:00 PM - 11:00 PM", live: true },
@@ -48,42 +48,42 @@ export default function Home() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Kalyan Morning</CardTitle>
-            <span className="text-sm text-muted-foreground">480-2</span>
+            <CardTitle className="text-sm font-medium">Milan Morning</CardTitle>
+            <span className="text-sm text-muted-foreground">128-1</span>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">480-21-579</div>
-            <p className="text-xs text-muted-foreground">Result at 12:00 PM</p>
+            <div className="text-2xl font-bold">128-19-450</div>
+            <p className="text-xs text-muted-foreground">Result at 11:00 AM</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Sridevi Day</CardTitle>
-             <span className="text-sm text-muted-foreground">137-1</span>
+             <span className="text-sm text-muted-foreground">369-8</span>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">137-14-680</div>
-             <p className="text-xs text-muted-foreground">Result at 01:30 PM</p>
+            <div className="text-2xl font-bold">369-82-147</div>
+             <p className="text-xs text-muted-foreground">Result at 12:30 PM</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Time Bazar</CardTitle>
-             <span className="text-sm text-muted-foreground">590-4</span>
+             <span className="text-sm text-muted-foreground">150-6</span>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">590-43-120</div>
-            <p className="text-xs text-muted-foreground">Result at 02:30 PM</p>
+            <div className="text-2xl font-bold">150-64-248</div>
+            <p className="text-xs text-muted-foreground">Result at 01:30 PM</p>
           </CardContent>
         </Card>
         <Card className="bg-primary text-primary-foreground">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Kalyan Morning Live</CardTitle>
+            <CardTitle className="text-sm font-medium">Kalyan Live</CardTitle>
             <CircleDot className="text-accent animate-pulse"/>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">128-1</div>
-            <p className="text-xs text-muted-foreground">Close at 12:00 PM</p>
+            <div className="text-2xl font-bold">345-2</div>
+            <p className="text-xs">Close at 06:10 PM</p>
           </CardContent>
         </Card>
       </div>
