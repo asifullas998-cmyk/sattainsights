@@ -13,12 +13,36 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Zap, BarChart, Search, Target, Puzzle, BrainCircuit, Users } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import React from 'react';
 
 const formSchema = z.object({
   gameName: z.string().min(1, 'Please select a game.'),
   historicalData: z.string().min(20, 'Please provide at least 20 characters of historical data.'),
   urls: z.string().optional(),
 });
+
+// A component to find and style numbers in a string
+const HighlightNumbers = ({ text }: { text: string }) => {
+    if (!text) return null;
+  
+    // Regex to find numbers, number pairs with '-', and number groups
+    const parts = text.split(/(\b\d{1,3}-\d{1,2}-\d{1,3}\b|\b\d{2,3}\b|\b\d{1,2}\b)/g);
+  
+    return (
+      <p className="text-sm text-muted-foreground leading-relaxed">
+        {parts.map((part, index) =>
+          /(\b\d{1,3}-\d{1,2}-\d{1,3}\b|\b\d{2,3}\b|\b\d{1,2}\b)/.test(part) ? (
+            <Badge key={index} variant="default" className="text-md mx-1">
+              {part}
+            </Badge>
+          ) : (
+            <React.Fragment key={index}>{part}</React.Fragment>
+          )
+        )}
+      </p>
+    );
+};
 
 export function AiAnalyzerClient() {
   const [analysisResult, setAnalysisResult] = useState<AnalyzeSattaPatternsOutput | null>(null);
@@ -183,7 +207,7 @@ Sunday: 224-81-470`,
                     <CardTitle>Overall Summary</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-muted-foreground">{analysisResult.summary}</p>
+                     <HighlightNumbers text={analysisResult.summary} />
                   </CardContent>
                 </Card>
                  <Card>
@@ -192,7 +216,7 @@ Sunday: 224-81-470`,
                     <CardTitle>Community Forum Analysis</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-muted-foreground">{analysisResult.forumAnalysis}</p>
+                     <HighlightNumbers text={analysisResult.forumAnalysis} />
                   </CardContent>
                 </Card>
                 <div className="grid gap-4 md:grid-cols-2">
@@ -202,7 +226,7 @@ Sunday: 224-81-470`,
                             <CardTitle>Frequency Analysis</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p className="text-sm text-muted-foreground">{analysisResult.frequencyAnalysis}</p>
+                            <HighlightNumbers text={analysisResult.frequencyAnalysis} />
                         </CardContent>
                     </Card>
                     <Card>
@@ -211,25 +235,25 @@ Sunday: 224-81-470`,
                             <CardTitle>Missing Numbers</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p className="text-sm text-muted-foreground">{analysisResult.missingNumbers}</p>
+                            <HighlightNumbers text={analysisResult.missingNumbers} />
                         </CardContent>
                     </Card>
                     <Card>
                         <CardHeader className="flex-row items-center gap-4 space-y-0">
                             <div className="p-2 rounded-lg bg-primary/10 text-primary"><Target className="w-6 h-6" /></div>
                             <CardTitle>Hot & Cold Numbers</CardTitle>
-                        </CardHeader>
+                        </Header>
                         <CardContent>
-                            <p className="text-sm text-muted-foreground">{analysisResult.hotAndColdNumbers}</p>
+                           <HighlightNumbers text={analysisResult.hotAndColdNumbers} />
                         </CardContent>
                     </Card>
                      <Card>
                         <CardHeader className="flex-row items-center gap-4 space-y-0">
                             <div className="p-2 rounded-lg bg-primary/10 text-primary"><Zap className="w-6 h-6" /></div>
                             <CardTitle>Jodi Analysis</CardTitle>
-                        </CardHeader>
+                        </Header>
                         <CardContent>
-                            <p className="text-sm text-muted-foreground">{analysisResult.jodiAnalysis}</p>
+                             <HighlightNumbers text={analysisResult.jodiAnalysis} />
                         </CardContent>
                     </Card>
                 </div>
