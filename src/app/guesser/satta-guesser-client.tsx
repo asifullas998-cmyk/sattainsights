@@ -49,7 +49,7 @@ export function SattaGuesserClient() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       gameName: 'KALYAN',
-      forumUrl: '',
+      forumUrl: 'https://satta-matka.in/guessing-forum',
       date: new Date(),
     },
   });
@@ -99,7 +99,7 @@ export function SattaGuesserClient() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="KALYAN">Kalyan</SelectItem>
+                           <SelectItem value="KALYAN">Kalyan</SelectItem>
                           <SelectItem value="KALYAN MORNING">Kalyan Morning</SelectItem>
                           <SelectItem value="KALYAN NIGHT">Kalyan Night</SelectItem>
                           <SelectItem value="MAIN BAZAR">Main Bazar</SelectItem>
@@ -114,6 +114,13 @@ export function SattaGuesserClient() {
                           <SelectItem value="MADHUR NIGHT">Madhur Night</SelectItem>
                           <SelectItem value="SUPREME DAY">Supreme Day</SelectItem>
                           <SelectItem value="SUPREME NIGHT">Supreme Night</SelectItem>
+                          <SelectItem value="MADHURI">Madhuri</SelectItem>
+                          <SelectItem value="MADHURI NIGHT">Madhuri Night</SelectItem>
+                          <SelectItem value="GOLDEN">Golden</SelectItem>
+                          <SelectItem value="GALI">Gali</SelectItem>
+                          <SelectItem value="DESAWAR">Desawar</SelectItem>
+                          <SelectItem value="GHAZIABAD">Ghaziabad</SelectItem>
+                          <SelectItem value="FARIDABAD">Faridabad</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
