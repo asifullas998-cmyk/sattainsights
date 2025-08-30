@@ -53,14 +53,8 @@ export function AiAnalyzerClient() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      gameName: 'KALYAN',
-      historicalData: `Monday: 589-27-160
-Tuesday: 340-71-290
-Wednesday: 680-45-140
-Thursday: 237-29-450
-Friday: 115-78-350
-Saturday: 580-30-127
-Sunday: 224-81-470`,
+      gameName: '',
+      historicalData: '',
       urls: '',
     },
   });
@@ -274,3 +268,5 @@ Sunday: 224-81-470`,
     </div>
   );
 }
+
+    
