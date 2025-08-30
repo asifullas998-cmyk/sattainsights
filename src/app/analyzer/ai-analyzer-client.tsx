@@ -266,5 +266,3 @@ export function AiAnalyzerClient() {
     </div>
   );
 }
-
-    
