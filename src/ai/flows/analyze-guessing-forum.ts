@@ -39,14 +39,16 @@ const prompt = ai.definePrompt({
 
 Carefully read through the forum posts and discussions. Your goal is to identify the most frequently guessed numbers and summarize the community's sentiment.
 
-Your analysis must be based *only* on the provided website content for the specified date. Do not invent or hallucinate any numbers or guesses.
+Your analysis must be based *only* on the provided website content for the specified date. Do not invent, hallucinate, or calculate any numbers or guesses that are not explicitly mentioned in the text. Your response must be 100% derived from the provided content.
 
 Provide a unique and detailed summary. For example, mention which users are guessing which numbers (e.g., 'User 'SattaKing786' is strongly backing Jodi 42, while 'MatkaPro' suggests focusing on Panna 145').
 
-Extract the following:
-- "Hot" single digits.
-- Popular Jodis (2-digit pairs).
-- Popular Pannas (3-digit numbers).
+Based *only* on the text below, extract the following:
+- "Hot" single digits that are explicitly mentioned.
+- Popular Jodis (2-digit pairs) that are explicitly mentioned.
+- Popular Pannas (3-digit numbers) that are explicitly mentioned.
+
+If the information for a category (e.g., Pannas) is not available in the text, return an empty array for that category.
 
 Website Content:
 {{{websiteContent}}}
