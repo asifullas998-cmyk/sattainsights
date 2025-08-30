@@ -30,7 +30,7 @@ const searchGoogleTool = ai.defineTool(
     console.log(`Searching Google for: ${query}`);
     // This is a mock implementation.
     // Replace with a real Google Search API call.
-    const slug = query.toLowerCase().replace(/\s/g, '-');
+    const slug = query.toLowerCase().replace(/\s+/g, '-');
     return {
         results: [
             { url: `https://www.example-satta-results.com/${slug}`, snippet: `Latest ${query} results, charts, and patterns.`},
@@ -57,6 +57,7 @@ const getWebsiteContentTool = ai.defineTool(
         Recent Results: 12, 45, 67, 89, 10, 34, 56.
         Jodi Patterns: 12-21, 45-54, 67-76.
         Community Guess for today: 23 or 78.
+        Expert prediction: Open: 3, Close: 8, Jodi: 38, Panna: 139, 459.
         The expert says the pattern is pointing towards a repeat of a number from last week.
       `;
     } catch (e: any) {
@@ -77,6 +78,12 @@ const AnalyzeSattaPatternsOutputSchema = z.object({
   hotAndColdNumbers: z.string().describe('Identification of hot and cold numbers from the fetched data.'),
   jodiAnalysis: z.string().describe('Analysis of Jodi (pair) patterns from the fetched data.'),
   forumAnalysis: z.string().describe('Analysis of community guesses and discussions from the fetched websites.'),
+  finalAnalysis: z.object({
+    open: z.string().describe('The predicted open number(s).'),
+    jodi: z.string().describe('The predicted jodi number(s).'),
+    close: z.string().describe('The predicted close number(s).'),
+    panna: z.string().describe('The predicted panna number(s).'),
+  }).describe('The final predicted numbers based on the complete analysis.'),
 });
 export type AnalyzeSattaPatternsOutput = z.infer<typeof AnalyzeSattaPatternsOutputSchema>;
 
@@ -102,6 +109,8 @@ const prompt = ai.definePrompt({
   - Jodi (pair) patterns
   - Community discussions, predictions, and popular guesses.
   
+  After your analysis, provide a final prediction, breaking it down into separate "open", "jodi", "close", and "panna" numbers in the 'finalAnalysis' field.
+
   Present all insights in a clear, understandable format, filling out all fields of the output schema.
 
   Website Content:

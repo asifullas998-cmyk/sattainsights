@@ -12,7 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Zap, BarChart, Search, Target, Puzzle, BrainCircuit, Users } from 'lucide-react';
+import { Loader2, Zap, BarChart, Search, Target, Puzzle, BrainCircuit, Users, Star } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import React from 'react';
 
@@ -154,6 +154,34 @@ export function AiAnalyzerClient() {
             )}
             {analysisResult ? (
               <div className="space-y-4">
+                 {analysisResult.finalAnalysis && (
+                  <Card className="bg-primary/10 border-primary/20">
+                    <CardHeader className="flex-row items-center gap-4 space-y-0">
+                      <div className="p-2 rounded-lg bg-primary/20 text-primary-foreground"><Star className="w-6 h-6 text-primary" /></div>
+                      <CardTitle>Final Analysis</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                          <div>
+                              <p className="text-sm font-medium text-muted-foreground">Open</p>
+                              <p className="text-2xl font-bold"><HighlightNumbers text={analysisResult.finalAnalysis.open} /></p>
+                          </div>
+                           <div>
+                              <p className="text-sm font-medium text-muted-foreground">Close</p>
+                              <p className="text-2xl font-bold"><HighlightNumbers text={analysisResult.finalAnalysis.close} /></p>
+                          </div>
+                          <div>
+                              <p className="text-sm font-medium text-muted-foreground">Jodi</p>
+                              <p className="text-2xl font-bold"><HighlightNumbers text={analysisResult.finalAnalysis.jodi} /></p>
+                          </div>
+                           <div>
+                              <p className="text-sm font-medium text-muted-foreground">Panna</p>
+                              <p className="text-lg font-bold"><HighlightNumbers text={analysisResult.finalAnalysis.panna} /></p>
+                          </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
                 <Card>
                   <CardHeader className="flex-row items-center gap-4 space-y-0">
                     <div className="p-2 rounded-lg bg-primary/10 text-primary"><Puzzle className="w-6 h-6" /></div>
