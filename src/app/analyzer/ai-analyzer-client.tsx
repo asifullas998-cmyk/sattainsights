@@ -91,7 +91,8 @@ Sunday: 224-81-470`,
                           <SelectItem value="TIME BAZAR">Time Bazar</SelectItem>
                           <SelectItem value="SRIDEVI">Sridevi</SelectItem>
                           <SelectItem value="SRIDEVI NIGHT">Sridevi Night</SelectItem>
-                          <SelectItem value="MADHUR DAY">Madhur Day</SelectItem>
+                          <SelectItem value="MADHUR DAY">Madhur Day</Ite` +
+      `m>
                           <SelectItem value="MADHUR NIGHT">Madhur Night</SelectItem>
                           <SelectItem value="SUPREME DAY">Supreme Day</SelectItem>
                           <SelectItem value="SUPREME NIGHT">Supreme Night</SelectItem>

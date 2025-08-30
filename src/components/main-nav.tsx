@@ -17,10 +17,8 @@ import {
   BookMarked,
   Settings,
   Tv,
-  Users,
 } from "lucide-react";
 import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
 
 export function MainNav() {
   const pathname = usePathname();
@@ -29,7 +27,6 @@ export function MainNav() {
     { href: "/", label: "Dashboard", icon: Tv },
     { href: "/charts", label: "Charts", icon: BarChartBig },
     { href: "/analyzer", label: "AI Analyzer", icon: BrainCircuit },
-    { href: "/guesser", label: "Satta Guesser", icon: Users, isNew: true },
     { href: "/diary", label: "Prediction Diary", icon: BookMarked },
   ];
 
@@ -50,16 +47,16 @@ export function MainNav() {
         <SidebarMenu>
           {menuItems.map((item) => (
             <SidebarMenuItem key={item.label}>
-               <Link href={item.href}>
-                <SidebarMenuButton
-                  isActive={pathname === item.href}
-                  tooltip={{ children: item.label, side:"right" }}
-                >
-                    <item.icon />
-                    <span>{item.label}</span>
-                    {item.isNew && <Badge variant="secondary" className="ml-auto">New</Badge>}
-                </SidebarMenuButton>
-              </Link>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === item.href}
+                tooltip={{ children: item.label, side:"right" }}
+              >
+                <Link href={item.href}>
+                  <item.icon />
+                  <span>{item.label}</span>
+                </Link>
+              </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
