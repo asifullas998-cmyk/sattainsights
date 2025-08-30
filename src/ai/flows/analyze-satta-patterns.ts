@@ -46,7 +46,7 @@ export type AnalyzeSattaPatternsInput = z.infer<typeof AnalyzeSattaPatternsInput
 const AnalyzeSattaPatternsOutputSchema = z.object({
   summary: z.string().describe('A summary of identified patterns in the Satta data, incorporating insights from any provided web content.'),
   frequencyAnalysis: z.string().describe('Analysis of number frequencies from historical data.'),
-  missingNumbers: z-string().describe('Identified missing numbers in recent results from historical data.'),
+  missingNumbers: z.string().describe('Identified missing numbers in recent results from historical data.'),
   hotAndColdNumbers: z.string().describe('Identification of hot and cold numbers from historical data.'),
   jodiAnalysis: z.string().describe('Analysis of Jodi (pair) patterns from historical data.'),
   forumAnalysis: z.string().describe('Analysis of community guesses and discussions from the provided website URLs. If no URLs are provided, state that this analysis was not performed.'),
