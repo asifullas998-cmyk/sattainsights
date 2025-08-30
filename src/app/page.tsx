@@ -20,10 +20,10 @@ type GameSchedule = {
 };
 
 const liveResults: GameResult[] = [
-  { name: "KALYAN", openPatti: "345", open: "2", jodi: "23", close: "3", closePatti: "490", chartLink: "/charts" },
-  { name: "MAIN BAZAR", openPatti: "115", open: "7", jodi: "71", close: "1", closePatti: "380", chartLink: "/charts" },
-  { name: "MILAN NIGHT", openPatti: "580", open: "3", jodi: "35", close: "5", closePatti: "140", chartLink: "/charts" },
-  { name: "RAJDHANI NIGHT", openPatti: "248", open: "4", jodi: "41", close: "1", closePatti: "560", chartLink: "/charts" },
+  { name: "KALYAN", openPatti: "589", open: "2", jodi: "27", close: "7", closePatti: "160", chartLink: "/charts" },
+  { name: "MAIN BAZAR", openPatti: "340", open: "7", jodi: "71", close: "1", closePatti: "290", chartLink: "/charts" },
+  { name: "MILAN NIGHT", openPatti: "680", open: "4", jodi: "45", close: "5", closePatti: "140", chartLink: "/charts" },
+  { name: "RAJDHANI NIGHT", openPatti: "237", open: "2", jodi: "29", close: "9", closePatti: "450", chartLink: "/charts" },
 ];
 
 const gameSchedule: GameSchedule[] = [
@@ -49,30 +49,30 @@ export default function Home() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Milan Morning</CardTitle>
-            <span className="text-sm text-muted-foreground">128-1</span>
+            <span className="text-sm text-muted-foreground">369-8</span>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">128-19-450</div>
+            <div className="text-2xl font-bold">369-81-470</div>
             <p className="text-xs text-muted-foreground">Result at 11:00 AM</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Sridevi Day</CardTitle>
-             <span className="text-sm text-muted-foreground">369-8</span>
+             <span className="text-sm text-muted-foreground">128-1</span>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">369-82-147</div>
+            <div className="text-2xl font-bold">128-19-450</div>
              <p className="text-xs text-muted-foreground">Result at 12:30 PM</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Time Bazar</CardTitle>
-             <span className="text-sm text-muted-foreground">150-6</span>
+             <span className="text-sm text-muted-foreground">580-3</span>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">150-64-248</div>
+            <div className="text-2xl font-bold">580-31-146</div>
             <p className="text-xs text-muted-foreground">Result at 01:30 PM</p>
           </CardContent>
         </Card>
@@ -82,7 +82,7 @@ export default function Home() {
             <CircleDot className="text-accent animate-pulse"/>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">345-2</div>
+            <div className="text-2xl font-bold">589-2</div>
             <p className="text-xs">Close at 06:10 PM</p>
           </CardContent>
         </Card>

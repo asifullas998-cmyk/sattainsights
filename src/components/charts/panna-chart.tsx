@@ -2,12 +2,12 @@
 import { Table, TableBody, TableCell, TableHeader, TableRow, TableHead } from "@/components/ui/table";
 
 const pannaData = [
-    { day: "Mon", openPatti: "135", jodi: "93", closePatti: "157" },
-    { day: "Tue", openPatti: "248", jodi: "41", closePatti: "560" },
-    { day: "Wed", openPatti: "670", jodi: "33", closePatti: "120" },
-    { day: "Thu", openPatti: "389", jodi: "05", closePatti: "230" },
-    { day: "Fri", openPatti: "115", jodi: "71", closePatti: "380" },
-    { day: "Sat", openPatti: "580", jodi: "35", closePatti: "140" },
+    { day: "Mon", openPatti: "237", jodi: "29", closePatti: "450" },
+    { day: "Tue", openPatti: "680", jodi: "45", closePatti: "140" },
+    { day: "Wed", openPatti: "340", jodi: "71", closePatti: "290" },
+    { day: "Thu", openPatti: "589", jodi: "27", closePatti: "160" },
+    { day: "Fri", openPatti: "115", jodi: "78", closePatti: "350" },
+    { day: "Sat", openPatti: "580", jodi: "30", closePatti: "127" },
 ];
 
 export function PannaChart() {

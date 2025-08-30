@@ -28,7 +28,7 @@ export function AiAnalyzerClient() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       gameName: 'KALYAN',
-      historicalData: `Monday: 345-23-490\nTuesday: 115-71-380\nWednesday: 580-35-140\nThursday: 248-41-560\nFriday: 670-33-120\nSaturday: 389-05-230\nSunday: 135-93-157`,
+      historicalData: `Monday: 589-27-160\nTuesday: 340-71-290\nWednesday: 680-45-140\nThursday: 237-29-450\nFriday: 115-78-350\nSaturday: 580-30-127\nSunday: 224-81-470`,
     },
   });
 
