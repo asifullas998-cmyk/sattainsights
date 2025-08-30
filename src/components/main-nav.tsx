@@ -48,16 +48,17 @@ export function MainNav() {
         <SidebarMenu>
           {menuItems.map((item) => (
             <SidebarMenuItem key={item.label}>
-              <Link href={item.href} legacyBehavior passHref>
-                <SidebarMenuButton
-                  isActive={pathname === item.href}
-                  tooltip={{ children: item.label, side:"right" }}
-                >
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === item.href}
+                tooltip={{ children: item.label, side:"right" }}
+              >
+                <Link href={item.href}>
                   <item.icon />
                   <span>{item.label}</span>
                   {item.isNew && <Badge variant="secondary" className="ml-auto">New</Badge>}
-                </SidebarMenuButton>
-              </Link>
+                </Link>
+              </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
