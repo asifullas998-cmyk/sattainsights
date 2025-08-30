@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useToast } from '@/hooks/use-toast';
@@ -20,7 +20,7 @@ import { cn } from '@/lib/utils';
 
 const formSchema = z.object({
   gameName: z.string().min(1, 'Please select a game.'),
-  forumUrl: z.string().url('Please enter a valid URL.'),
+  forumUrls: z.string().min(10, 'Please enter at least one valid URL.'),
   date: z.date({
     required_error: 'A date is required.',
   }),
@@ -49,7 +49,7 @@ export function SattaGuesserClient() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       gameName: 'KALYAN',
-      forumUrl: 'https://satta-matka.in/guessing-forum',
+      forumUrls: 'https://satta-matka.in/guessing-forum',
       date: new Date(),
     },
   });
@@ -81,7 +81,7 @@ export function SattaGuesserClient() {
         <Card>
           <CardHeader>
             <CardTitle>Analyze Guessing Forum</CardTitle>
-            <CardDescription>Enter a URL to a Satta guessing forum.</CardDescription>
+            <CardDescription>Enter one or more Satta guessing forum URLs.</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -129,13 +129,15 @@ export function SattaGuesserClient() {
                 />
                 <FormField
                   control={form.control}
-                  name="forumUrl"
+                  name="forumUrls"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Forum URL</FormLabel>
+                      <FormLabel>Forum URLs (one per line)</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="https://example.com/guessing-forum"
+                        <Textarea
+                          placeholder="https://example.com/forum1
+https://example.com/forum2"
+                          className="min-h-[120px]"
                           {...field}
                         />
                       </FormControl>
@@ -208,7 +210,7 @@ export function SattaGuesserClient() {
             {isLoading && (
               <div className="flex flex-col items-center justify-center h-96 gap-4">
                 <Bot className="w-16 h-16 text-primary animate-pulse" />
-                <p className="text-muted-foreground">Reading the forum... Please wait.</p>
+                <p className="text-muted-foreground">Reading the forums... Please wait.</p>
               </div>
             )}
             {analysisResult ? (
@@ -219,17 +221,23 @@ export function SattaGuesserClient() {
                 <div className="grid gap-4 md:grid-cols-3">
                     <AnalysisResultCard icon={<Flame className="w-6 h-6" />} title="Hot Numbers">
                         <div className="flex flex-wrap gap-2">
-                            {analysisResult.hotNumbers.map(n => <div key={n} className="bg-primary/10 text-primary font-bold text-lg rounded-md w-12 h-12 flex items-center justify-center">{n}</div>)}
+                            {analysisResult.hotNumbers.length > 0 ? (
+                                analysisResult.hotNumbers.map(n => <div key={n} className="bg-primary/10 text-primary font-bold text-lg rounded-md w-12 h-12 flex items-center justify-center">{n}</div>)
+                            ) : (<p className="text-sm text-muted-foreground">No hot numbers found.</p>)}
                         </div>
                     </AnalysisResultCard>
                     <AnalysisResultCard icon={<Target className="w-6 h-6" />} title="Popular Jodis">
                         <div className="flex flex-wrap gap-2">
-                             {analysisResult.popularJodis.map(n => <div key={n} className="bg-primary/10 text-primary font-bold text-lg rounded-md w-12 h-12 flex items-center justify-center">{n}</div>)}
+                             {analysisResult.popularJodis.length > 0 ? (
+                                analysisResult.popularJodis.map(n => <div key={n} className="bg-primary/10 text-primary font-bold text-lg rounded-md w-12 h-12 flex items-center justify-center">{n}</div>)
+                             ) : (<p className="text-sm text-muted-foreground">No popular Jodis found.</p>)}
                         </div>
                     </AnalysisResultCard>
                     <AnalysisResultCard icon={<Users className="w-6 h-6" />} title="Popular Pannas">
                          <div className="flex flex-wrap gap-2">
-                             {analysisResult.popularPannas.map(n => <div key={n} className="bg-primary/10 text-primary font-bold text-lg rounded-md w-14 h-12 flex items-center justify-center">{n}</div>)}
+                             {analysisResult.popularPannas.length > 0 ? (
+                                analysisResult.popularPannas.map(n => <div key={n} className="bg-primary/10 text-primary font-bold text-lg rounded-md w-14 h-12 flex items-center justify-center">{n}</div>)
+                             ) : (<p className="text-sm text-muted-foreground">No popular Pannas found.</p>)}
                         </div>
                     </AnalysisResultCard>
                 </div>
