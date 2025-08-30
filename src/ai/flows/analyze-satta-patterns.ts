@@ -30,10 +30,11 @@ const searchGoogleTool = ai.defineTool(
     console.log(`Searching Google for: ${query}`);
     // This is a mock implementation.
     // Replace with a real Google Search API call.
+    const slug = query.toLowerCase().replace(/\s/g, '-');
     return {
         results: [
-            { url: `https://www.example-satta-results.com/${query.toLowerCase().replace(' ','-')}`, snippet: `Latest ${query} results, charts, and patterns.`},
-            { url: `https://www.example-satta-forum.com/t/${query.toLowerCase().replace(' ','-')}-discussion`, snippet: `Community forum for ${query} with live guesses.`},
+            { url: `https://www.example-satta-results.com/${slug}`, snippet: `Latest ${query} results, charts, and patterns.`},
+            { url: `https://www.example-satta-forum.com/t/${slug}-discussion`, snippet: `Community forum for ${query} with live guesses.`},
         ]
     };
   }
@@ -133,4 +134,3 @@ const analyzeSattaPatternsFlow = ai.defineFlow(
     return output!;
   }
 );
-
