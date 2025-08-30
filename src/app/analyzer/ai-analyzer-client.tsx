@@ -28,7 +28,7 @@ const HighlightNumbers = ({ text }: { text: string }) => {
     const parts = text.split(/(\b\d{1,3}-\d{1,2}-\d{1,3}\b|\b\d{2,3}\b|\b\d{1,2}\b)/g);
 
     return (
-      <p className="text-sm text-muted-foreground leading-relaxed">
+      <span className="text-sm text-muted-foreground leading-relaxed">
         {parts.map((part, index) =>
           /(\b\d{1,3}-\d{1,2}-\d{1,3}\b|\b\d{2,3}\b|\b\d{1,2}\b)/.test(part) ? (
             <Badge key={index} variant="default" className="text-md mx-1">
@@ -38,7 +38,7 @@ const HighlightNumbers = ({ text }: { text: string }) => {
             <React.Fragment key={index}>{part}</React.Fragment>
           )
         )}
-      </p>
+      </span>
     );
 };
 
@@ -188,7 +188,9 @@ export function AiAnalyzerClient() {
                     <CardTitle>Overall Summary</CardTitle>
                   </CardHeader>
                   <CardContent>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
                      <HighlightNumbers text={analysisResult.summary} />
+                    </p>
                   </CardContent>
                 </Card>
                  <Card>
@@ -197,7 +199,9 @@ export function AiAnalyzerClient() {
                     <CardTitle>Community Forum Analysis</CardTitle>
                   </CardHeader>
                   <CardContent>
-                     <HighlightNumbers text={analysisResult.forumAnalysis} />
+                     <p className="text-sm text-muted-foreground leading-relaxed">
+                        <HighlightNumbers text={analysisResult.forumAnalysis} />
+                     </p>
                   </CardContent>
                 </Card>
                 <div className="grid gap-4 md:grid-cols-2">
@@ -207,7 +211,9 @@ export function AiAnalyzerClient() {
                             <CardTitle>Frequency Analysis</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <HighlightNumbers text={analysisResult.frequencyAnalysis} />
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                                <HighlightNumbers text={analysisResult.frequencyAnalysis} />
+                            </p>
                         </CardContent>
                     </Card>
                     <Card>
@@ -216,25 +222,31 @@ export function AiAnalyzerClient() {
                             <CardTitle>Missing Numbers</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <HighlightNumbers text={analysisResult.missingNumbers} />
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                                <HighlightNumbers text={analysisResult.missingNumbers} />
+                            </p>
                         </CardContent>
                     </Card>
                     <Card>
                         <CardHeader className="flex-row items-center gap-4 space-y-0">
                             <div className="p-2 rounded-lg bg-primary/10 text-primary"><Target className="w-6 h-6" /></div>
                             <CardTitle>Hot &amp; Cold Numbers</CardTitle>
-                        </CardHeader>
+                        </Header>
                         <CardContent>
-                           <HighlightNumbers text={analysisResult.hotAndColdNumbers} />
+                           <p className="text-sm text-muted-foreground leading-relaxed">
+                             <HighlightNumbers text={analysisResult.hotAndColdNumbers} />
+                           </p>
                         </CardContent>
                     </Card>
                      <Card>
                         <CardHeader className="flex-row items-center gap-4 space-y-0">
                             <div className="p-2 rounded-lg bg-primary/10 text-primary"><Zap className="w-6 h-6" /></div>
                             <CardTitle>Jodi Analysis</CardTitle>
-                        </CardHeader>
+                        </Header>
                         <CardContent>
-                             <HighlightNumbers text={analysisResult.jodiAnalysis} />
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                                <HighlightNumbers text={analysisResult.jodiAnalysis} />
+                            </p>
                         </CardContent>
                     </Card>
                 </div>
@@ -254,3 +266,5 @@ export function AiAnalyzerClient() {
     </div>
   );
 }
+
+    
