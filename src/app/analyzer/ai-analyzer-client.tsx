@@ -28,7 +28,7 @@ const HighlightNumbers = ({ text }: { text: string }) => {
     const parts = text.split(/(\b\d{1,3}-\d{1,2}-\d{1,3}\b|\b\d{2,3}\b|\b\d{1,2}\b)/g);
 
     return (
-      <span className="text-sm text-muted-foreground leading-relaxed">
+      <span className="leading-relaxed">
         {parts.map((part, index) =>
           /(\b\d{1,3}-\d{1,2}-\d{1,3}\b|\b\d{2,3}\b|\b\d{1,2}\b)/.test(part) ? (
             <Badge key={index} variant="default" className="text-md mx-1">
@@ -164,19 +164,19 @@ export function AiAnalyzerClient() {
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                           <div>
                               <p className="text-sm font-medium text-muted-foreground">Open</p>
-                              <p className="text-2xl font-bold"><HighlightNumbers text={analysisResult.finalAnalysis.open} /></p>
+                              <div className="text-2xl font-bold"><HighlightNumbers text={analysisResult.finalAnalysis.open} /></div>
                           </div>
                            <div>
                               <p className="text-sm font-medium text-muted-foreground">Close</p>
-                              <p className="text-2xl font-bold"><HighlightNumbers text={analysisResult.finalAnalysis.close} /></p>
+                              <div className="text-2xl font-bold"><HighlightNumbers text={analysisResult.finalAnalysis.close} /></div>
                           </div>
                           <div>
                               <p className="text-sm font-medium text-muted-foreground">Jodi</p>
-                              <p className="text-2xl font-bold"><HighlightNumbers text={analysisResult.finalAnalysis.jodi} /></p>
+                              <div className="text-2xl font-bold"><HighlightNumbers text={analysisResult.finalAnalysis.jodi} /></div>
                           </div>
                            <div>
                               <p className="text-sm font-medium text-muted-foreground">Panna</p>
-                              <p className="text-lg font-bold"><HighlightNumbers text={analysisResult.finalAnalysis.panna} /></p>
+                              <div className="text-lg font-bold"><HighlightNumbers text={analysisResult.finalAnalysis.panna} /></div>
                           </div>
                       </div>
                     </CardContent>
