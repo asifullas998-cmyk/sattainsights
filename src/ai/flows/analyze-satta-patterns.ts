@@ -148,13 +148,12 @@ const prompt = ai.definePrompt({
   
   After your analysis, provide a final prediction, breaking it down into separate "open", "jodi", "close", and "panna" numbers in the 'finalAnalysis' field.
 
-  Fill in the gameName, analysisDate, and analysisTime fields with the provided values.
+  Fill in the gameName and analysisDate fields with the provided values. You should also populate the analysisTime field with the current time.
 
   Present all insights in a clear, understandable format, filling out all fields of the output schema.
 
   Game Name: {{{gameName}}}
   Analysis Date: {{{analysisDate}}}
-  Analysis Time: {{{analysisTime}}}
 
   Website Content:
   {{{webContent}}}
@@ -178,17 +177,16 @@ const analyzeSattaPatternsFlow = ai.defineFlow(
     const webContents = await Promise.all(webContentPromises);
     const combinedWebContent = webContents.join('\n\n---\n\n');
 
-    // 3. Get current date and time
+    // 3. Get current date. The time is removed to ensure consistency.
     const now = new Date();
     const analysisDate = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    const analysisTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-
+    
     // 4. Call the prompt with the fetched content
     const {output} = await prompt({
         gameName: input.gameName,
         webContent: combinedWebContent,
         analysisDate: analysisDate,
-        analysisTime: analysisTime,
+        analysisTime: now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }),
     });
     return output!;
   }
