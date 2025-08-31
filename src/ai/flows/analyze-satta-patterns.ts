@@ -102,6 +102,7 @@ const getWebsiteContentTool = ai.defineTool(
 
 const AnalyzeSattaPatternsInputSchema = z.object({
   gameName: z.string().describe('The name of the Satta game (e.g., Kalyan Matka).'),
+  analysisDate: z.string().describe('The date for which the analysis is being performed, in a readable format (e.g., June 12, 2024). This must be fixed for a given day.'),
 });
 export type AnalyzeSattaPatternsInput = z.infer<typeof AnalyzeSattaPatternsInputSchema>;
 
@@ -130,12 +131,16 @@ export async function analyzeSattaPatterns(input: AnalyzeSattaPatternsInput): Pr
 
 const prompt = ai.definePrompt({
   name: 'analyzeSattaPatternsPrompt',
-  input: {schema: z.any()}, // Input is dynamic
+  input: {schema: z.object({
+    gameName: z.string(),
+    webContent: z.string(),
+    analysisDate: z.string(),
+  })},
   output: {schema: AnalyzeSattaPatternsOutputSchema},
   tools: [getWebsiteContentTool],
   prompt: `You are an expert Satta pattern analyst.
 
-  Your goal is to analyze the automatically fetched historical data and community discussions for the game: {{{gameName}}}.
+  Your goal is to analyze the automatically fetched historical data and community discussions for the game: {{{gameName}}}. The analysis is for the date: {{{analysisDate}}}.
 
   The content from several websites has been fetched for you using the 'getWebsiteContent' tool. This content is provided below.
 
@@ -148,11 +153,12 @@ const prompt = ai.definePrompt({
   
   After your analysis, provide a final prediction, breaking it down into separate "open", "jodi", "close", and "panna" numbers in the 'finalAnalysis' field.
 
-  Fill in the gameName, analysisDate, and analysisTime fields. The date and time should reflect when the analysis is performed.
+  Fill in the gameName and analysisDate fields. The date should be exactly what is provided in the input. Also fill in a static analysisTime of "09:00 AM".
 
   Present all insights in a clear, understandable format, filling out all fields of the output schema.
 
   Game Name: {{{gameName}}}
+  Analysis Date: {{{analysisDate}}}
 
   Website Content:
   {{{webContent}}}
@@ -177,17 +183,11 @@ const analyzeSattaPatternsFlow = ai.defineFlow(
     const combinedWebContent = webContents.join('\n\n---\n\n');
     
     // 3. Call the prompt with the fetched content
-    const now = new Date();
-    const analysisDate = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    const analysisTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-
     const {output} = await prompt({
         gameName: input.gameName,
         webContent: combinedWebContent,
-        analysisDate: analysisDate,
-        analysisTime: analysisTime,
+        analysisDate: input.analysisDate,
     });
     return output!;
   }
 );
-

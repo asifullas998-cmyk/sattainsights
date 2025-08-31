@@ -57,8 +57,12 @@ export function AiAnalyzerClient() {
     setIsLoading(true);
     setAnalysisResult(null);
     try {
+      // Get today's date in a consistent format
+      const analysisDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      
       const result = await analyzeSattaPatterns({
         gameName: values.gameName,
+        analysisDate: analysisDate,
       });
       setAnalysisResult(result);
     } catch (error) {
@@ -158,7 +162,7 @@ export function AiAnalyzerClient() {
                      <div className="flex justify-between items-start">
                         <div>
                           <CardTitle className="text-primary">{analysisResult.gameName}</CardTitle>
-                          <CardDescription>Analysis generated on {analysisResult.analysisDate} at {analysisResult.analysisTime}</CardDescription>
+                          <CardDescription>Analysis for {analysisResult.analysisDate}</CardDescription>
                         </div>
                         <Badge variant="secondary" className="capitalize">{form.getValues('gameName').toLowerCase()}</Badge>
                      </div>
@@ -264,7 +268,7 @@ export function AiAnalyzerClient() {
             ) : (
               !isLoading && (
               <div className="flex flex-col items-center justify-center h-96 border-2 border-dashed rounded-lg">
-                <BrainCircuit className="w-16 h-16 text-muted-foreground/50" />
+                <BrainCircuit className="w-12 h-12 text-muted-foreground/50" />
                 <p className="mt-4 text-center text-muted-foreground">
                   Your analysis will be displayed here.
                 </p>
