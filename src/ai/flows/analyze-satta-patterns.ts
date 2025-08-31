@@ -130,7 +130,7 @@ export async function analyzeSattaPatterns(input: AnalyzeSattaPatternsInput): Pr
 
 const prompt = ai.definePrompt({
   name: 'analyzeSattaPatternsPrompt',
-  input: {schema: z.any()}, // Input is dynamic now
+  input: {schema: z.any()}, // Input is dynamic
   output: {schema: AnalyzeSattaPatternsOutputSchema},
   tools: [getWebsiteContentTool],
   prompt: `You are an expert Satta pattern analyst.
@@ -148,12 +148,11 @@ const prompt = ai.definePrompt({
   
   After your analysis, provide a final prediction, breaking it down into separate "open", "jodi", "close", and "panna" numbers in the 'finalAnalysis' field.
 
-  Fill in the gameName and analysisDate fields with the provided values. You should also populate the analysisTime field with the current time.
+  Fill in the gameName, analysisDate, and analysisTime fields. The date and time should reflect when the analysis is performed.
 
   Present all insights in a clear, understandable format, filling out all fields of the output schema.
 
   Game Name: {{{gameName}}}
-  Analysis Date: {{{analysisDate}}}
 
   Website Content:
   {{{webContent}}}
@@ -176,18 +175,19 @@ const analyzeSattaPatternsFlow = ai.defineFlow(
     const webContentPromises = searchResponse.results.map(result => getWebsiteContentTool({ url: result.url }));
     const webContents = await Promise.all(webContentPromises);
     const combinedWebContent = webContents.join('\n\n---\n\n');
-
-    // 3. Get current date. The time is removed to ensure consistency.
+    
+    // 3. Call the prompt with the fetched content
     const now = new Date();
     const analysisDate = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    
-    // 4. Call the prompt with the fetched content
+    const analysisTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+
     const {output} = await prompt({
         gameName: input.gameName,
         webContent: combinedWebContent,
         analysisDate: analysisDate,
-        analysisTime: now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }),
+        analysisTime: analysisTime,
     });
     return output!;
   }
 );
+
