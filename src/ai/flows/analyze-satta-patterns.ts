@@ -52,17 +52,26 @@ const getWebsiteContentTool = ai.defineTool(
     try {
       // In a real app, you'd fetch the URL. We'll return mock data for this example.
       console.log(`Fetching content for URL: ${url}`);
-      // Generate deterministic data based on the URL to make it consistent per game
-      let seed = 0;
-      for (let i = 0; i < url.length; i++) {
-        seed += url.charCodeAt(i);
-      }
-      // Simple pseudo-random number generator for consistency
-      const deterministicRandom = () => {
-        let x = Math.sin(seed++) * 10000;
-        return x - Math.floor(x);
-      };
       
+      // Consistent seed generation from URL
+      let seed = 0;
+      for(let i = 0; i < url.length; i++) {
+        const charCode = url.charCodeAt(i);
+        seed = ((seed << 5) - seed) + charCode;
+        seed |= 0; // Convert to 32bit integer
+      }
+
+      // Mulberry32 pseudo-random number generator for consistency
+      const mulberry32 = (a: number) => {
+        return () => {
+          let t = a += 0x6D2B79F5;
+          t = Math.imul(t ^ t >>> 15, t | 1);
+          t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+          return ((t ^ t >>> 14) >>> 0) / 4294967296;
+        }
+      }
+      
+      const deterministicRandom = mulberry32(seed);
       const rand = (min: number, max: number) => Math.floor(deterministicRandom() * (max - min + 1)) + min;
       
       const recentResults = Array.from({length: 7}, () => rand(10, 99)).join(', ');
