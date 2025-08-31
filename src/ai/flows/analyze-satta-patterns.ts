@@ -191,3 +191,5 @@ const analyzeSattaPatternsFlow = ai.defineFlow(
     return output!;
   }
 );
+
+    
