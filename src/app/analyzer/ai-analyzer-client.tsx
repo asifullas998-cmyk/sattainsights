@@ -35,7 +35,7 @@ const HighlightNumbers = ({ text }: { text: string }) => {
               {part}
             </Badge>
           ) : (
-            <React.Fragment key={index}>{part}</React.Fragment>
+            <div key={index}>{part}</div>
           )
         )}
       </span>
@@ -231,7 +231,7 @@ export function AiAnalyzerClient() {
                         <CardHeader className="flex-row items-center gap-4 space-y-0">
                             <div className="p-2 rounded-lg bg-primary/10 text-primary"><Target className="w-6 h-6" /></div>
                             <CardTitle>Hot &amp; Cold Numbers</CardTitle>
-                        </Header>
+                        </CardHeader>
                         <CardContent>
                            <p className="text-sm text-muted-foreground leading-relaxed">
                              <HighlightNumbers text={analysisResult.hotAndColdNumbers} />
@@ -242,7 +242,7 @@ export function AiAnalyzerClient() {
                         <CardHeader className="flex-row items-center gap-4 space-y-0">
                             <div className="p-2 rounded-lg bg-primary/10 text-primary"><Zap className="w-6 h-6" /></div>
                             <CardTitle>Jodi Analysis</CardTitle>
-                        </Header>
+                        </CardHeader>
                         <CardContent>
                             <p className="text-sm text-muted-foreground leading-relaxed">
                                 <HighlightNumbers text={analysisResult.jodiAnalysis} />
@@ -266,3 +266,5 @@ export function AiAnalyzerClient() {
     </div>
   );
 }
+
+    
