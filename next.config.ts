@@ -28,6 +28,9 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: [
     'https://*.cluster-44kx2eiocbhe2tyk3zoyo3ryuo.cloudworkstations.dev',
   ],
+  serverActions: {
+    maxDuration: 120,
+  },
 };
 
 export default nextConfig;
