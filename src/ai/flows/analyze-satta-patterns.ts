@@ -72,6 +72,9 @@ const AnalyzeSattaPatternsInputSchema = z.object({
 export type AnalyzeSattaPatternsInput = z.infer<typeof AnalyzeSattaPatternsInputSchema>;
 
 const AnalyzeSattaPatternsOutputSchema = z.object({
+  gameName: z.string().describe('The name of the Satta game that was analyzed.'),
+  analysisDate: z.string().describe('The date of the analysis in a readable format (e.g., June 12, 2024).'),
+  analysisTime: z.string().describe('The time of the analysis in a readable format (e.g., 04:30 PM).'),
   summary: z.string().describe('A summary of identified patterns in the Satta data, incorporating insights from the fetched web content.'),
   frequencyAnalysis: z.string().describe('Analysis of number frequencies from the fetched data.'),
   missingNumbers: z.string().describe('Identified missing numbers in recent results from the fetched data.'),
@@ -111,7 +114,13 @@ const prompt = ai.definePrompt({
   
   After your analysis, provide a final prediction, breaking it down into separate "open", "jodi", "close", and "panna" numbers in the 'finalAnalysis' field.
 
+  Fill in the gameName, analysisDate, and analysisTime fields with the provided values.
+
   Present all insights in a clear, understandable format, filling out all fields of the output schema.
+
+  Game Name: {{{gameName}}}
+  Analysis Date: {{{analysisDate}}}
+  Analysis Time: {{{analysisTime}}}
 
   Website Content:
   {{{webContent}}}
@@ -135,10 +144,17 @@ const analyzeSattaPatternsFlow = ai.defineFlow(
     const webContents = await Promise.all(webContentPromises);
     const combinedWebContent = webContents.join('\n\n---\n\n');
 
-    // 3. Call the prompt with the fetched content
+    // 3. Get current date and time
+    const now = new Date();
+    const analysisDate = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const analysisTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+
+    // 4. Call the prompt with the fetched content
     const {output} = await prompt({
         gameName: input.gameName,
-        webContent: combinedWebContent
+        webContent: combinedWebContent,
+        analysisDate: analysisDate,
+        analysisTime: analysisTime,
     });
     return output!;
   }

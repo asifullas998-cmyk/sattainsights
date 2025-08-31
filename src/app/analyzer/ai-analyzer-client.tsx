@@ -12,7 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Zap, BarChart, Search, Target, Puzzle, BrainCircuit, Users, Star } from 'lucide-react';
+import { Loader2, Zap, BarChart, Search, Target, Puzzle, BrainCircuit, Users, Star, Calendar, Clock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import React from 'react';
 
@@ -153,6 +153,17 @@ export function AiAnalyzerClient() {
             )}
             {analysisResult ? (
               <div className="space-y-4">
+                 <Card>
+                  <CardHeader>
+                     <div className="flex justify-between items-start">
+                        <div>
+                          <CardTitle className="text-primary">{analysisResult.gameName}</CardTitle>
+                          <CardDescription>Analysis generated on {analysisResult.analysisDate} at {analysisResult.analysisTime}</CardDescription>
+                        </div>
+                        <Badge variant="secondary" className="capitalize">{form.getValues('gameName').toLowerCase()}</Badge>
+                     </div>
+                  </CardHeader>
+                </Card>
                  {analysisResult.finalAnalysis && (
                   <Card className="bg-primary/10 border-primary/20">
                     <CardHeader className="flex-row items-center gap-4 space-y-0">
@@ -265,5 +276,3 @@ export function AiAnalyzerClient() {
     </div>
   );
 }
-
-    
