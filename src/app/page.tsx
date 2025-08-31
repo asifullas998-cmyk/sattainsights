@@ -1,7 +1,11 @@
+
+'use client';
+
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { CircleDot } from "lucide-react";
+import { useEffect, useState } from "react";
 
 type GameResult = {
   name: string;
@@ -19,14 +23,14 @@ type GameSchedule = {
   live: boolean;
 };
 
-const liveResults: GameResult[] = [
+const initialLiveResults: GameResult[] = [
   { name: "KALYAN", openPatti: "589", open: "2", jodi: "27", close: "7", closePatti: "160", chartLink: "/charts" },
   { name: "MAIN BAZAR", openPatti: "340", open: "7", jodi: "71", close: "1", closePatti: "290", chartLink: "/charts" },
   { name: "MILAN NIGHT", openPatti: "680", open: "4", jodi: "45", close: "5", closePatti: "140", chartLink: "/charts" },
   { name: "RAJDHANI NIGHT", openPatti: "237", open: "2", jodi: "29", close: "9", closePatti: "450", chartLink: "/charts" },
 ];
 
-const gameSchedule: GameSchedule[] = [
+const initialGameSchedule: GameSchedule[] = [
     { name: "MILAN MORNING", time: "10:00 AM - 11:00 AM", live: false },
     { name: "KALYAN MORNING", time: "11:00 AM - 12:00 PM", live: true },
     { name: "SRIDEVI", time: "11:30 AM - 12:30 PM", live: false },
@@ -40,6 +44,41 @@ const gameSchedule: GameSchedule[] = [
 ];
 
 export default function Home() {
+  const [liveResults, setLiveResults] = useState<GameResult[]>(initialLiveResults);
+  const [gameSchedule, setGameSchedule] = useState<GameSchedule[]>(initialGameSchedule);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Simulate live data update by slightly changing the numbers
+      setLiveResults(prevResults => 
+        prevResults.map(result => {
+          const newJodi = (parseInt(result.jodi) + 1).toString().padStart(2, '0');
+          const newOpenPatti = result.openPatti.split('').map(d => (parseInt(d) + 1) % 10).join('');
+          const newClosePatti = result.closePatti.split('').map(d => (parseInt(d) + 1) % 10).join('');
+          return {
+            ...result,
+            jodi: newJodi,
+            openPatti: newOpenPatti,
+            closePatti: newClosePatti,
+            open: newJodi.charAt(0),
+            close: newJodi.charAt(1),
+          };
+        })
+      );
+      
+      // Simulate live status toggling
+      setGameSchedule(prevSchedule =>
+        prevSchedule.map(game => ({
+          ...game,
+          live: Math.random() > 0.5, // Randomly set live status
+        }))
+      );
+
+    }, 5000); // Refresh every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
       <div className="flex items-center justify-between space-y-2">
