@@ -133,8 +133,8 @@ const prompt = ai.definePrompt({
   name: 'analyzeSattaPatternsPrompt',
   input: {schema: z.object({
     gameName: z.string(),
-    webContent: z.string(),
     analysisDate: z.string(),
+    webContent: z.string(),
   })},
   output: {schema: AnalyzeSattaPatternsOutputSchema},
   tools: [getWebsiteContentTool],
