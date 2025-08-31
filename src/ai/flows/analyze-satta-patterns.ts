@@ -52,12 +52,18 @@ const getWebsiteContentTool = ai.defineTool(
     try {
       // In a real app, you'd fetch the URL. We'll return mock data for this example.
       console.log(`Fetching content for URL: ${url}`);
-      // Generate pseudo-random data based on the URL to make it unique per game
+      // Generate deterministic data based on the URL to make it consistent per game
       let seed = 0;
       for (let i = 0; i < url.length; i++) {
         seed += url.charCodeAt(i);
       }
-      const rand = (min: number, max: number) => Math.floor((Math.sin(seed++) * 10000) % (max - min + 1)) + min;
+      // Simple pseudo-random number generator for consistency
+      const deterministicRandom = () => {
+        let x = Math.sin(seed++) * 10000;
+        return x - Math.floor(x);
+      };
+      
+      const rand = (min: number, max: number) => Math.floor(deterministicRandom() * (max - min + 1)) + min;
       
       const recentResults = Array.from({length: 7}, () => rand(10, 99)).join(', ');
       const jodi1 = rand(10,99);
