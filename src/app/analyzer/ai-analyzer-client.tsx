@@ -20,17 +20,16 @@ const formSchema = z.object({
   gameName: z.string().min(1, 'Please select a game.'),
 });
 
-// A component to find and style numbers in a string
-const HighlightNumbers = ({ text }: { text: string }) => {
+function HighlightNumbers({ text }: { text: string }) {
     if (!text) return null;
 
-    // Regex to find numbers, number pairs with '-', and number groups
-    const parts = text.split(/(\b\d{1,3}-\d{1,2}-\d{1,3}\b|\b\d{2,3}\b|\b\d{1,2}\b)/g);
+    const regex = /(\b\d{1,3}-\d{1,2}-\d{1,3}\b|\b\d{2,3}\b|\b\d{1,2}\b)/g;
+    const parts = text.split(regex);
 
     return (
       <span className="leading-relaxed">
         {parts.map((part, index) =>
-          /(\b\d{1,3}-\d{1,2}-\d{1,3}\b|\b\d{2,3}\b|\b\d{1,2}\b)/.test(part) ? (
+          regex.test(part) ? (
             <Badge key={index} variant="default" className="text-md mx-1">
               {part}
             </Badge>
@@ -242,7 +241,7 @@ export function AiAnalyzerClient() {
                         <CardHeader className="flex-row items-center gap-4 space-y-0">
                             <div className="p-2 rounded-lg bg-primary/10 text-primary"><Zap className="w-6 h-6" /></div>
                             <CardTitle>Jodi Analysis</CardTitle>
-                        </Header>
+                        </CardHeader>
                         <CardContent>
                             <p className="text-sm text-muted-foreground leading-relaxed">
                                 <HighlightNumbers text={analysisResult.jodiAnalysis} />
@@ -266,3 +265,5 @@ export function AiAnalyzerClient() {
     </div>
   );
 }
+
+    
