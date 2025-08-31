@@ -52,13 +52,32 @@ const getWebsiteContentTool = ai.defineTool(
     try {
       // In a real app, you'd fetch the URL. We'll return mock data for this example.
       console.log(`Fetching content for URL: ${url}`);
+      // Generate pseudo-random data based on the URL to make it unique per game
+      let seed = 0;
+      for (let i = 0; i < url.length; i++) {
+        seed += url.charCodeAt(i);
+      }
+      const rand = (min: number, max: number) => Math.floor((Math.sin(seed++) * 10000) % (max - min + 1)) + min;
+      
+      const recentResults = Array.from({length: 7}, () => rand(10, 99)).join(', ');
+      const jodi1 = rand(10,99);
+      const jodi2 = rand(10,99);
+      const jodi3 = rand(10,99);
+      const communityGuess1 = rand(10,99);
+      const communityGuess2 = rand(10,99);
+      const expertOpen = rand(0,9);
+      const expertClose = rand(0,9);
+      const expertJodi = `${expertOpen}${expertClose}`;
+      const expertPanna1 = `${rand(1,9)}${rand(0,9)}${rand(0,9)}`;
+      const expertPanna2 = `${rand(1,9)}${rand(0,9)}${rand(0,9)}`;
+
       return `
         This is mocked content from ${url}.
-        Recent Results: 12, 45, 67, 89, 10, 34, 56.
-        Jodi Patterns: 12-21, 45-54, 67-76.
-        Community Guess for today: 23 or 78.
-        Expert prediction: Open: 3, Close: 8, Jodi: 38, Panna: 139, 459.
-        The expert says the pattern is pointing towards a repeat of a number from last week.
+        Recent Results: ${recentResults}.
+        Jodi Patterns: ${jodi1}-${jodi1 % 10}${Math.floor(jodi1 / 10)}, ${jodi2}-${jodi2 % 10}${Math.floor(jodi2 / 10)}, ${jodi3}-${jodi3 % 10}${Math.floor(jodi3 / 10)}.
+        Community Guess for today: ${communityGuess1} or ${communityGuess2}.
+        Expert prediction: Open: ${expertOpen}, Close: ${expertClose}, Jodi: ${expertJodi}, Panna: ${expertPanna1}, ${expertPanna2}.
+        The expert says the pattern is pointing towards a number ending in ${rand(0,9)}.
       `;
     } catch (e: any) {
       return `Error: Could not fetch URL. ${e.message}`;
